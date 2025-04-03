@@ -20,6 +20,24 @@ RSpec.describe StringCalculator do
 
     it "handles new lines as delimiters along with commas" do
       expect(StringCalculator.add("1\n2,3")).to eq(6)
-    end    
+    end
+
+    it "supports custom delimiter with a newline after `//`" do
+      expect(StringCalculator.add("//;\n1;2;3")).to eq(6)
+    end
+
+    it "supports custom delimiter without a newline" do
+      expect(StringCalculator.add("//|5|6|4")).to eq(15)
+    end
+
+    it "supports various special characters as delimiters" do
+      expect(StringCalculator.add("//.\n1.2.3")).to eq(6)
+      expect(StringCalculator.add("//@\n4@5@6")).to eq(15)
+      expect(StringCalculator.add("//#\n3#3#3")).to eq(9)
+      expect(StringCalculator.add("//$\n2$8$10")).to eq(20)
+      expect(StringCalculator.add("//%\n5%5%5")).to eq(15)
+      expect(StringCalculator.add("//^\n4^4^4")).to eq(12)
+      expect(StringCalculator.add("//&\n7&3&2")).to eq(12)
+    end
   end
 end
