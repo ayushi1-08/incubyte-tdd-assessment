@@ -39,5 +39,17 @@ RSpec.describe StringCalculator do
       expect(StringCalculator.add("//^\n4^4^4")).to eq(12)
       expect(StringCalculator.add("//&\n7&3&2")).to eq(12)
     end
+
+    it "raises an exception when negative numbers are present with default delimiter" do
+      expect { StringCalculator.add("1,-2,3,-4") }.to raise_error(RuntimeError, "Negative numbers not allowed: -2, -4")
+    end
+    
+    it "raises an exception when negative numbers are present with a custom delimiter" do
+      expect { StringCalculator.add("//;\n1;-2;3;-4") }.to raise_error(RuntimeError, "Negative numbers not allowed: -2, -4")
+    end
+    
+    it "raises an exception when negative numbers are present with a special character delimiter" do
+      expect { StringCalculator.add("//|\n1|-2|3|-4") }.to raise_error(RuntimeError, "Negative numbers not allowed: -2, -4")
+    end
   end
 end
